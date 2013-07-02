@@ -78,7 +78,7 @@ class AnnotationDriver
 
         list($object, $method) = $controller;
 
-        // the controller could be a proxy, e.g. when using the JMSSecuriyExtraBundle or JMSDiExtraBundle
+        // the controller could be a proxy, e.g. when using the JMSSecurityExtraBundle or JMSDiExtraBundle
         $className = ClassUtils::getClass($object);
 
         $reflectionClass = new \ReflectionClass($className);
@@ -95,10 +95,6 @@ class AnnotationDriver
 
             $signedRequestListener = new SignedRequestListener($this->salt, $this->statusCode, $this->response, $this->eventDispatcher, $this->debug);
             $signedRequestListener->setSigningService($this->signingService);
-
-            /*
-            $this->eventDispatcher->addListener(KernelEvents::REQUEST, array($signedRequestListener, 'onKernelRequest'));
-            */
 
             $hashed = $this->signingService->createRequestSignature($event->getRequest(), $this->salt);
             $hashFromRequest = $event->getRequest()->headers->get('X-SignedRequest');
